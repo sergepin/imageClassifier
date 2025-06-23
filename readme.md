@@ -48,14 +48,19 @@ source venv/bin/activate
 
 ### 3. Instalar dependencias
 
-**Opción A: Usar requirements.txt (Recomendado)**
+**Para desarrollo local (con GPU/CUDA):**
+```bash
+pip install -r requirements-dev.txt
+```
+
+**Para despliegue (CPU only):**
 ```bash
 pip install -r requirements.txt
 ```
 
 **Opción B: Instalación manual**
 ```bash
-# PyTorch con soporte CUDA (CUDA 11.8)
+# PyTorch con soporte CUDA (CUDA 11.8) - Solo para desarrollo local
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 
 # Dependencias adicionales
@@ -236,3 +241,21 @@ pip install torch torchvision torchaudio --index-url https://download.pytorch.or
 ---
 
 **¡Disfruta clasificando imágenes de gatos y perros! 🐾**
+
+## 🚀 Despliegue
+
+### Render.com
+
+1. **Conecta tu repositorio** a Render.com
+2. **Configura el servicio** como Web Service
+3. **Build Command**: `pip install -r requirements.txt`
+4. **Start Command**: `cd api && uvicorn app:app --host 0.0.0.0 --port $PORT`
+5. **Environment Variables**: No necesarias para este proyecto
+
+### Notas importantes para despliegue:
+
+- **CPU vs GPU**: En producción se usa la versión CPU de PyTorch
+- **Modelo pre-entrenado**: Asegúrate de que `model.pth` esté en el repositorio
+- **Puerto dinámico**: Render asigna el puerto automáticamente
+
+## 🎯 Uso

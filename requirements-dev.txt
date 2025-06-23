@@ -1,3 +1,9 @@
+# Core PyTorch with CUDA support for local development
+--index-url https://download.pytorch.org/whl/cu118
+torch
+torchvision
+torchaudio
+
 # Web Framework
 fastapi>=0.104.0
 uvicorn>=0.24.0
@@ -10,9 +16,4 @@ pillow>=10.0.0
 matplotlib>=3.7.0
 
 # Additional utilities
-numpy>=1.24.0
-
-# PyTorch (CPU version for deployment)
-torch>=2.0.0
-torchvision>=0.15.0
-torchaudio>=2.0.0 
+numpy>=1.24.0 
