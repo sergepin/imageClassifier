@@ -22,6 +22,7 @@ imageClassifier/
 │   ├── Cat/                # Imágenes de gatos
 │   └── Dog/                # Imágenes de perros
 ├── venv/                   # Entorno virtual
+├── requirements.txt        # Dependencias del proyecto
 └── readme.md               # Este archivo
 ```
 
@@ -47,28 +48,45 @@ source venv/bin/activate
 
 ### 3. Instalar dependencias
 
+**Opción A: Usar requirements.txt (Recomendado)**
 ```bash
-pip install torch torchvision matplotlib
-pip install fastapi uvicorn python-multipart pillow
+pip install -r requirements.txt
+```
+
+**Opción B: Instalación manual**
+```bash
+# PyTorch con soporte CUDA (CUDA 11.8)
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+# Dependencias adicionales
+pip install fastapi uvicorn[standard] python-multipart pillow matplotlib numpy
+```
+
+### 4. Verificar instalación CUDA
+
+```bash
+python -c "import torch; print(f'PyTorch version: {torch.__version__}'); print(f'CUDA available: {torch.cuda.is_available()}'); print(f'CUDA version: {torch.version.cuda if torch.cuda.is_available() else \"N/A\"}')"
 ```
 
 ## 📦 Dependencias Explicadas
 
 ### Core Dependencies
-- **`torch`**: Framework principal de deep learning (PyTorch)
+- **`torch`**: Framework principal de deep learning (PyTorch) con soporte CUDA
 - **`torchvision`**: Utilidades para visión por computadora con PyTorch
   - Incluye modelos pre-entrenados (ResNet18)
   - Transformaciones de imágenes
   - Datasets y DataLoaders
+- **`torchaudio`**: Utilidades para procesamiento de audio (incluido para compatibilidad)
 
 ### Web Framework
 - **`fastapi`**: Framework web moderno y rápido para crear APIs
-- **`uvicorn`**: Servidor ASGI para ejecutar aplicaciones FastAPI
+- **`uvicorn[standard]`**: Servidor ASGI con dependencias adicionales para producción
 - **`python-multipart`**: Manejo de archivos multipart (necesario para subir imágenes)
 
 ### Image Processing
 - **`pillow`**: Biblioteca para procesamiento de imágenes (PIL)
 - **`matplotlib`**: Visualización de datos y gráficos
+- **`numpy`**: Computación numérica (dependencia de PyTorch)
 
 ## 🎯 Uso
 
@@ -97,6 +115,7 @@ python train.py
 El script:
 - Carga el dataset desde `../dataset/`
 - Entrena un modelo ResNet18 por 5 épocas
+- Utiliza GPU si está disponible (CUDA)
 - Guarda el modelo entrenado como `model.pth`
 
 ### 3. Ejecutar la API
@@ -151,6 +170,7 @@ model = models.resnet50(weights=ResNet18_Weights.DEFAULT)
 - **Output**: Clasificación binaria (gato/perro)
 - **Optimizador**: Adam
 - **Loss Function**: CrossEntropyLoss
+- **GPU Support**: Compatible con CUDA para entrenamiento acelerado
 
 ## 🛠️ Comandos Útiles
 
@@ -162,6 +182,11 @@ python -c "import torch; print(torch.__version__)"
 ### Verificar CUDA (GPU)
 ```bash
 python -c "import torch; print(torch.cuda.is_available())"
+```
+
+### Verificar versión de CUDA
+```bash
+python -c "import torch; print(torch.version.cuda)"
 ```
 
 ### Documentación automática de la API
@@ -185,7 +210,7 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 
 ### Error: "No module named 'torch'"
 ```bash
-pip install torch torchvision
+pip install -r requirements.txt
 ```
 
 ### Error: "CUDA out of memory"
@@ -193,6 +218,20 @@ Reduce el `batch_size` en `train.py`
 
 ### Error: "Model file not found"
 Asegúrate de haber entrenado el modelo antes de ejecutar la API
+
+### Error: "CUDA not available"
+Si tienes GPU NVIDIA pero CUDA no está disponible:
+1. Instala los drivers NVIDIA más recientes
+2. Instala CUDA Toolkit 11.8
+3. Reinstala PyTorch con soporte CUDA:
+```bash
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+```
+
+### Versiones de CUDA compatibles
+- CUDA 11.8 (recomendado)
+- CUDA 12.1
+- CPU-only (sin GPU)
 
 ---
 

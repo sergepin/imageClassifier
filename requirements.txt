@@ -1,0 +1,19 @@
+# Core PyTorch with CUDA support
+--index-url https://download.pytorch.org/whl/cu118
+torch
+torchvision
+torchaudio
+
+# Web Framework
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+
+# Image Processing
+pillow>=10.0.0
+
+# Visualization
+matplotlib>=3.7.0
+
+# Additional utilities
+numpy>=1.24.0 
