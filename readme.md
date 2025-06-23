@@ -59,7 +59,7 @@ pip install -r requirements.txt
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 
 # Dependencias adicionales
-pip install fastapi uvicorn[standard] python-multipart pillow matplotlib numpy
+pip install fastapi uvicorn python-multipart pillow matplotlib numpy
 ```
 
 ### 4. Verificar instalación CUDA
@@ -80,7 +80,7 @@ python -c "import torch; print(f'PyTorch version: {torch.__version__}'); print(f
 
 ### Web Framework
 - **`fastapi`**: Framework web moderno y rápido para crear APIs
-- **`uvicorn[standard]`**: Servidor ASGI con dependencias adicionales para producción
+- **`uvicorn`**: Servidor ASGI para ejecutar aplicaciones FastAPI
 - **`python-multipart`**: Manejo de archivos multipart (necesario para subir imágenes)
 
 ### Image Processing
