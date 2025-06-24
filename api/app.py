@@ -6,16 +6,21 @@ import torch
 import torchvision.transforms as transforms
 from torchvision import models
 import torch.nn as nn
+import os
 
 app = FastAPI()
 
 # Clases
 class_names = ['cat', 'dog']
 
+# Ruta absoluta al modelo (segura para cualquier entorno)
+BASE_DIR = os.path.dirname(__file__)
+MODEL_PATH = os.path.join(BASE_DIR, "..", "model", "model.pth")
+
 # Modelo
 model = models.resnet18(pretrained=True)
 model.fc = nn.Linear(model.fc.in_features, 2)
-model.load_state_dict(torch.load("../model/model.pth", map_location=torch.device('cpu')))
+model.load_state_dict(torch.load(MODEL_PATH, map_location=torch.device('cpu')))
 model.eval()
 
 # Transformación de imagen
